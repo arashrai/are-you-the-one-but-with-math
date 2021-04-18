@@ -33,8 +33,39 @@ class AreYouTheOne:
         """
         pass
 
+    # def lights(self, pairing, num_lights):
+    #     """
+    #     Eliminates impossible pairings.
+    #     """
+    #     # I'm given a set of pairs and a number of lights implying the number of 
+    #     # correct pairs. I will compare each `all_possible_pairings` with `pairing`
+    #     # and if `num_lights + 1` or more number of pairs are the same, then remove this `pairing`
+
+    #     new_possible_pairings = []
+    #     for test_pairing in self.all_possible_pairings:
+    #         count_of_matches = 0
+    #         for pair in test_pairing: 
+    #             if pair in pairing.pairs:
+    #                 count_of_matches += 1
+            
+    #         if count_of_matches <= num_lights:
+    #             new_possible_pairings.append(test_pairing)
+        
+    #     self.all_possible_pairings = new_possible_pairings
+
     def lights(self, pairing, num_lights):
         """
         Eliminates impossible pairings.
         """
-        pass
+        new_possible_pairings = []
+        
+        for test_pairing in self.all_possible_pairings:
+            count_of_lights = 0
+            for pair in test_pairing:
+                if pair in pairing.pairs:
+                    count_of_lights += 1
+        
+            if count_of_lights == num_lights:
+                new_possible_pairings.append(test_pairing)
+        
+        self.all_possible_pairings = new_possible_pairings
