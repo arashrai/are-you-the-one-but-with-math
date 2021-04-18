@@ -66,15 +66,27 @@ class AreYouTheOne:
         
     #     self.all_possible_pairings = new_possible_pairings
 
-    def lights(self, pairing, num_lights):
+    def lights(self, guys, girls, num_lights):
         """
         Eliminates impossible pairings.
         """
+        # guys and girls are arrays of names, now converting to ids then constructing 
+        #   PossiblePairing from it
+        print(guys)
+        for ind, guy in enumerate(guys): 
+            guys[ind] = self.name_to_id[guy]
+        for ind, girl in enumerate(girls):
+            girls[ind] = self.name_to_id[girl]
+        print(guys)
+            
+        pairing = PossiblePairing(guys, girls)
+
+        # Eliminating pairs that would have made the lighting impossible
         new_possible_pairings = []
-        
+
         for test_pairing in self.all_possible_pairings:
             count_of_lights = 0
-            for pair in test_pairing:
+            for pair in test_pairing.pairs:
                 if pair in pairing.pairs:
                     count_of_lights += 1
         
@@ -82,3 +94,4 @@ class AreYouTheOne:
                 new_possible_pairings.append(test_pairing)
         
         self.all_possible_pairings = new_possible_pairings
+
