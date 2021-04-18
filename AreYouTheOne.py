@@ -4,6 +4,7 @@ from itertools import permutations
 class AreYouTheOne:
     name_to_id = {}
     all_possible_pairings = {}
+    couple_odds = {}
 
     def __init__(self, guys, girls):
         self.name_to_id = {}
@@ -45,26 +46,7 @@ class AreYouTheOne:
                 new_possible_pairings.append(test_pairing)
     
         self.all_possible_pairings = new_possible_pairings
-
-    # def lights(self, pairing, num_lights):
-    #     """
-    #     Eliminates impossible pairings.
-    #     """
-    #     # I'm given a set of pairs and a number of lights implying the number of 
-    #     # correct pairs. I will compare each `all_possible_pairings` with `pairing`
-    #     # and if `num_lights + 1` or more number of pairs are the same, then remove this `pairing`
-
-    #     new_possible_pairings = []
-    #     for test_pairing in self.all_possible_pairings:
-    #         count_of_matches = 0
-    #         for pair in test_pairing: 
-    #             if pair in pairing.pairs:
-    #                 count_of_matches += 1
-            
-    #         if count_of_matches <= num_lights:
-    #             new_possible_pairings.append(test_pairing)
-        
-    #     self.all_possible_pairings = new_possible_pairings
+        self.calculate_odds_for_all_couples()
 
     def lights(self, pairing, num_lights):
         """
@@ -82,3 +64,29 @@ class AreYouTheOne:
                 new_possible_pairings.append(test_pairing)
         
         self.all_possible_pairings = new_possible_pairings
+        self.calculate_odds_for_all_couples()
+
+    def calculate_odds_for_all_couples(self):
+        n = len(self.all_possible_pairings)
+
+        # Maps couples to how many possible pairings they appear
+        couple_counts = {}
+
+        for pairing in self.all_possible_pairings:
+            for pair in pairing.pairs:
+                if pair not in couple_counts:
+                    couple_counts[pair] = 0
+                couple_counts[pair] += 1
+        
+        # Maps couples to a percentage chance of them being together
+        couple_odds = {}
+
+        for k,v in couple_counts.items():
+            couple_odds[k] = v/n * 100
+        
+        self.couple_odds = couple_odds
+
+    def get_odds_for_couple(self, guy, girl):
+        pair = (self.name_to_id[guy], self.name_to_id[girl])
+        return self.couple_odds.get(pair, 0)
+

@@ -25,3 +25,5 @@ show.truth_booth("Adam", "Amber", False)
 
 for p in show.all_possible_pairings:
     print(p)
+
+print(show.get_odds_for_couple("Adam", "Amber"))
