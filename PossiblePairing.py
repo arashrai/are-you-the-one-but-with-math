@@ -15,3 +15,4 @@ class PossiblePairing:
 
 
 # PossiblePairing(["richy", "guy", "arash"], ["nat", "chelsea", "jess"])
+# PossiblePairing(["1", "2", "3"], ["4", "5", "6"])
