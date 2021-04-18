@@ -2,6 +2,9 @@ from PossiblePairing import PossiblePairing
 from itertools import permutations
 
 class AreYouTheOne:
+    name_to_id = {}
+    all_possible_pairings = {}
+
     def __init__(self, guys, girls):
         self.name_to_id = {}
         
@@ -26,12 +29,22 @@ class AreYouTheOne:
         for p in possible_permutations:
             self.all_possible_pairings.append(PossiblePairing(guy_ids, p))
 
-
-    def truth_booth(self, p1, p2, is_match):
+    def truth_booth(self, guy, girl, is_match):
         """
         Eliminates impossible pairings.
         """
-        pass
+
+        new_possible_pairings = []
+
+        pair = (self.name_to_id[guy], self.name_to_id[girl])
+
+        for test_pairing in self.all_possible_pairings:
+            if is_match and pair in test_pairing.pairs:
+                new_possible_pairings.append(test_pairing)
+            elif not is_match and pair not in test_pairing.pairs:
+                new_possible_pairings.append(test_pairing)
+    
+        self.all_possible_pairings = new_possible_pairings
 
     # def lights(self, pairing, num_lights):
     #     """
