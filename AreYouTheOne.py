@@ -32,7 +32,7 @@ class AreYouTheOne:
         possible_permutations = permutations(girl_ids)
 
         for p in possible_permutations:
-            self.all_possible_pairings.append(PossiblePairing(guy_ids, p))
+            self.all_possible_pairings.append(PossiblePairing(guy_ids, p, self.id_to_name))
 
     def truth_booth(self, guy, girl, is_match):
         """
@@ -71,7 +71,7 @@ class AreYouTheOne:
         for girl in girls:
             new_girls.append(self.name_to_id[girl])
 
-        pairing = PossiblePairing(new_guys, new_girls)
+        pairing = PossiblePairing(new_guys, new_girls, self.id_to_name)
 
         # Eliminating pairs that would have made the lighting impossible
         new_possible_pairings = []
@@ -125,4 +125,20 @@ class AreYouTheOne:
         for percent, couple in odds_array:
             print(self.id_to_name[couple[0]] + " <-> " + self.id_to_name[couple[1]] + ": " + str(percent) + "%")
         print()
+
+    def print_most_likely_pairing(self):
+        best_prob = 0
+        best_pairing = None
+
+        for pairing in self.all_possible_pairings:
+            prob = 1
+            for guy, girl in pairing.pairs:
+                prob *= self.get_odds_for_couple(self.id_to_name[guy], self.id_to_name[girl])/100
+
+            if prob > best_prob:
+                best_prob = prob
+                best_pairing = pairing
         
+        print()
+        print("The following pairing has a", str(best_prob*100) + "%", "of being correct.")
+        print(best_pairing)

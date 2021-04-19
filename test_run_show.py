@@ -16,3 +16,4 @@ show = AreYouTheOne(guys, girls)
 
 show.truth_booth("Adam", "Amber", True)
 show.pretty_print_odds()
+show.print_most_likely_pairing()
