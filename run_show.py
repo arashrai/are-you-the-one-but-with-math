@@ -27,5 +27,6 @@ girls = [
 ]
 
 show = AreYouTheOne(guys, girls)
+show.truth_booth("Adam", "Amber", True)
 
-print(show)
+print(show.couple_odds)

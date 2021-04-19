@@ -3,23 +3,27 @@ from itertools import permutations
 
 class AreYouTheOne:
     name_to_id = {}
+    id_to_name = {}
     all_possible_pairings = {}
     couple_odds = {}
 
     def __init__(self, guys, girls):
         self.name_to_id = {}
-        
+        self.id_to_name = {}
+
         guy_ids = []
         girl_ids = []
         id = 1
         
         for g in guys:
             self.name_to_id[g] = id
+            self.id_to_name[id] = g
             guy_ids.append(id)
             id += 1
         
         for g in girls:
             self.name_to_id[g] = id
+            self.id_to_name[id] = g
             girl_ids.append(id)
             id += 1
 
@@ -101,3 +105,18 @@ class AreYouTheOne:
     def get_odds_for_couple(self, guy, girl):
         pair = (self.name_to_id[guy], self.name_to_id[girl])
         return self.couple_odds.get(pair, 0)
+
+    def pretty_print_odds(self):
+        odds_array = []
+        for k, v in self.couple_odds.items():
+            odds_array.append( (v, k) )
+        
+        odds_array.sort(reverse=True)
+
+        print()
+        print("Odds for all couples:")
+        print()
+        for percent, couple in odds_array:
+            print(self.id_to_name[couple[0]] + " <-> " + self.id_to_name[couple[1]] + ": " + str(percent) + "%")
+        print()
+        
