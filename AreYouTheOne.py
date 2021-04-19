@@ -38,6 +38,7 @@ class AreYouTheOne:
         """
         Eliminates impossible pairings.
         """
+        print("Running truth_booth with " + guy + " and " + girl + " with match: " + str(is_match))
 
         new_possible_pairings = []
 
@@ -56,16 +57,21 @@ class AreYouTheOne:
         """
         Eliminates impossible pairings.
         """
+        print("Running lights with " + str(num_lights) + " lights")
+        print("Guys: ", guys)
+        print("Girls: ", girls)
+
         # guys and girls are arrays of names, now converting to ids then constructing 
         #   PossiblePairing from it
-        print(guys)
-        for ind, guy in enumerate(guys): 
-            guys[ind] = self.name_to_id[guy]
-        for ind, girl in enumerate(girls):
-            girls[ind] = self.name_to_id[girl]
-        print(guys)
-            
-        pairing = PossiblePairing(guys, girls)
+        new_guys = []
+        new_girls = []
+
+        for guy in guys:
+            new_guys.append(self.name_to_id[guy])
+        for girl in girls:
+            new_girls.append(self.name_to_id[girl])
+
+        pairing = PossiblePairing(new_guys, new_girls)
 
         # Eliminating pairs that would have made the lighting impossible
         new_possible_pairings = []
